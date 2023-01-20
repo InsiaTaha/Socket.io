@@ -24,15 +24,19 @@ let interval;
 
 io.on("connection", (socket) => {
   console.log(`New client connected`);
-  socket.emit("getUserSocketID",`New client connected ${socket.id}`)
-//   socket.on("test",(msg)=>{
-//     console.log("emit",msg)
-//     socket.emit("hellotest","hello")
-//})
+  //socket.emit("getUserSocketID",`New client connected ${socket.id}`)
+  socket.on("Click",(msg)=>{
+    console.log("emit",msg)
+    let rand = Math.floor(Math.random() * 100);
+    socket.emit("getUserSocketID",`New client connected ${socket.id + rand}`)
+})
   if (interval) {
     clearInterval(interval);
   }
-
+//   socket.on('getUserSocketID', function(data) {
+//   //send a message to ALL connected clients
+//   socket.emit('buttonUpdate', `New client connected ${socket.id}`);
+// });
   interval = setInterval(() => getApiAndEmit(socket), 1000);
   
   socket.on("disconnect", () => {
